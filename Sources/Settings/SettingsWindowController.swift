@@ -109,7 +109,7 @@ public final class SettingsWindowController: NSWindowController {
 		NSApp.activate(ignoringOtherApps: true)
 		#endif
 
-		self.makeKeyAndOrderFront(nil)
+		self.window?.makeKeyAndOrderFront(nil)
 	}
 
 	private func restoreWindowPosition() {
