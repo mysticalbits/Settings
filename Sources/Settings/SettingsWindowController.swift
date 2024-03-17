@@ -96,6 +96,7 @@ public final class SettingsWindowController: NSWindowController {
 		}
 
 		NSApplication.shared.setActivationPolicy(.regular)
+		showWindow(self)
 		
 		#if compiler(>=5.9) && canImport(AppKit)
 		if #available(macOS 14, *) {
@@ -107,7 +108,6 @@ public final class SettingsWindowController: NSWindowController {
 		NSApp.activate(ignoringOtherApps: true)
 		#endif
 
-				showWindow(self)
 		restoreWindowPosition()
 
 		self.window?.makeKeyAndOrderFront(nil)
