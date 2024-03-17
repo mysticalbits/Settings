@@ -96,21 +96,25 @@ public final class SettingsWindowController: NSWindowController {
 		}
 
 		NSApplication.shared.setActivationPolicy(.regular)
-		showWindow(self)
-		
-		#if compiler(>=5.9) && canImport(AppKit)
-		if #available(macOS 14, *) {
-			NSApp.activate()
-		} else {
-			NSApp.activate(ignoringOtherApps: true)
-		}
-		#else
-		NSApp.activate(ignoringOtherApps: true)
-		#endif
 
+		if !NSApp.isActive || !(self.window?.isKeyWindow ?? false) {
+			#if compiler(>=5.9) && canImport(AppKit)
+			if #available(macOS 14, *) {
+				NSApp.activate()
+			} else {
+				NSApp.activate(ignoringOtherApps: true)
+			}
+			#else
+			NSApp.activate(ignoringOtherApps: true)
+			#endif
+		}
+		
+		showWindow(self)
 		restoreWindowPosition()
 
-		self.window?.makeKeyAndOrderFront(nil)
+		DispatchQueue.main.asyncAfter(deadline: .now() + 0.02) {
+			self.window?.makeKeyAndOrderFront(nil)
+		}
 	}
 
 	private func restoreWindowPosition() {
