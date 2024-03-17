@@ -95,6 +95,8 @@ public final class SettingsWindowController: NSWindowController {
 			tabViewController.restoreInitialTab()
 		}
 
+		NSApplication.shared.setActivationPolicy(.regular)
+		
 		showWindow(self)
 		restoreWindowPosition()
 		#if compiler(>=5.9) && canImport(AppKit)
@@ -106,6 +108,8 @@ public final class SettingsWindowController: NSWindowController {
 		#else
 		NSApp.activate(ignoringOtherApps: true)
 		#endif
+
+		self.makeKeyAndOrderFront(nil)
 	}
 
 	private func restoreWindowPosition() {
